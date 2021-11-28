@@ -4,7 +4,6 @@ import { getDatabase } from "firebase/database";
 import firebase from 'firebase'
 require('firebase/auth')
 
-
 const firebaseConfig = firebase.initializeApp({
     apiKey: "AIzaSyBOMt4KRGhpHIYePvhLiNBF3AFmE2lGVNg",
     authDomain: "hirt-app.firebaseapp.com",
@@ -17,7 +16,6 @@ const firebaseConfig = firebase.initializeApp({
   });
 export default firebaseConfig;
 
-// const db = firebaseApp.firestore();
 export const db = firebaseConfig.database();
 export const auth = firebaseConfig.auth();
 export const provider = new firebase.auth.GoogleAuthProvider();

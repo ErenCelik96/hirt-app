@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Navbar from '../components/Navbar';
 import FormPage from '../components/FormPage';
 import Dashboard from '../components/Dashboard';
@@ -12,7 +12,7 @@ const AuthUser = ({ user }) => {
                 <div>
                     <Switch>
                         <Route exact path="/dashboard">
-                            <Dashboard />
+                            <Dashboard user={user} />
                         </Route>
                         <Route path="/">
                             <FormPage />
