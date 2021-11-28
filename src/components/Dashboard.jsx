@@ -68,7 +68,7 @@ const Dashboard = ({ user }) => {
                                 <TableCell >{blog.durum || <b>bilgi girmemiş sığır</b>}</TableCell>
                                 <TableCell >{blog.nereye || <b>bilgi girmemiş sığır</b>}</TableCell>
                                 <TableCell >{moment(blog.tarih).format('LLL') === "Invalid date" ? moment(today).format('LLL') : moment(blog.tarih).format('LLL')}</TableCell>
-                                <Button disabled={user.displayName === blog.isim ? false : true} onClick={() => remove(blog.id)}>Sil</Button>
+                                <Button disabled={user.displayName === blog.isim ? false : true} sx={{color:"red"}} onClick={() => remove(blog.id)}>Sil</Button>
                             </TableRow>
                         ))}
                     </TableBody>
