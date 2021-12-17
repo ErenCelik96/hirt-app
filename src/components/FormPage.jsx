@@ -32,7 +32,7 @@ const FormPage = () => {
   // let [id, setId] = useState(0);
 
   const handleChangeWhere = (e) => {
-    setWhere(e.target.value);
+    setWhere(e.target.value.toLocaleLowerCase());
   }
 
   const handleChangeDate = (e) => {
@@ -44,10 +44,9 @@ const FormPage = () => {
     addRef.push({
       isim:user.displayName,
       nereye:where,
-      tarih:date,
+      tarih:date
     });
     setMessage("Durumun paylaşıldı.")
-    // setId(id+1);
   }
 
   useEffect(() => {
