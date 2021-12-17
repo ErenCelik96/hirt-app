@@ -36,6 +36,7 @@ const Dashboard = ({ user }) => {
 
     //gelenler bilgilerini state e aktarma fonk
     useEffect(() => {
+
         const addRef = db.ref("gelenler");
         addRef.on("value", (snapshot) => {
             const durum = snapshot.val();
@@ -79,12 +80,12 @@ const Dashboard = ({ user }) => {
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', margin: '20px' }}>
+            <Typography variant="h4" sx={{ color: "blue" }}>Anasayfa</Typography>
             <br />
-            <Typography variant="h5" sx={{ color: "blue" }}>Anasayfa</Typography>
             <br />
             <Input value={key} onChange={(e) => handleKey(e)} placeholder="Nereye gitmek istediğini yaz.." sx={{ width: "250px" }} />
             <br />
-            <Typography align='center' variant='string'>Gitmek istediğiniz yeri <u>doğru</u> ve <u>eksiksiz</u>  girin.</Typography>
+            <Typography align='center' variant='string'>Gitmek istediğiniz yeri <u>doğru</u> ve <u>eksiksiz</u>  girin. <br /> Örn: <mark>kartal</mark>, <mark>piazza</mark>, <mark>pendik marina</mark></Typography>
             <br />
             <Button onClick={addGelen}>Kaydet</Button>
             <br />
@@ -94,7 +95,6 @@ const Dashboard = ({ user }) => {
                         <TableRow>
                             <TableCell><u>Sıra</u></TableCell>
                             <TableCell><u>İsim</u></TableCell>
-                            <TableCell><u>Dışarı çıkma durumu</u></TableCell>
                             <TableCell><u>Gitmek istediği yer</u></TableCell>
                             <TableCell><u>Tarih / saat</u></TableCell>
                             <TableCell><u>Gelenler</u></TableCell>
@@ -112,21 +112,24 @@ const Dashboard = ({ user }) => {
                                 <TableCell component="th" scope="row">
                                     {blog?.isim}
                                 </TableCell>
-                                <TableCell >{blog?.durum || <b>bilgi girilmemiş</b>}</TableCell>
                                 <TableCell >{blog?.nereye || <b>bilgi girilmemiş</b>}</TableCell>
                                 <TableCell sx={{ textDecoration: moment(blog.tarih, "YYYYMMDD").fromNow().includes("ago") ? "line-through" : "none" }}>{moment(blog?.tarih).format('LLL') === "Invalid date" ? moment(today).format('LLL') : moment(blog?.tarih).format('LLL')}</TableCell>
-                                <TableCell>
+                                <TableCell sx={{minWidth:'120px'}}>
                                     {
                                         gelenlerTable.map((gelen, i) => (
-                                            gelen.where !== blog.nereye || gelen.where === "" || moment(blog.tarih, "YYYYMMDD").fromNow().includes("ago")  ?
+                                            gelen.where !== blog.nereye || gelen.where === "" || moment(blog.tarih, "YYYYMMDD").fromNow().includes("ago") || user.displayName === blog.isim ?
                                                 null
                                                 :
-                                                <p
-                                                    key={i}
-                                                >
-                                                    {gelen?.isim}
-                                                    <Button disabled={user.displayName === gelen.isim ? false : true} onClick={() => removeGelen(gelen.id)}><DeleteOutlinedIcon sx={{ color: user.displayName !== gelen.isim ? 'grey' : 'red' }} /></Button>
-                                                </p>
+                                                <div style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
+                                                    <p
+                                                        key={i}
+                                                    >
+                                                        {gelen?.isim}
+                                                    </p>
+                                                    <Button disabled={user.displayName === gelen.isim ? false : true} onClick={() => removeGelen(gelen.id)}><DeleteOutlinedIcon sx={{ color: user.displayName !== gelen.isim ? 'grey' : 'red' }} />
+                                                    </Button>
+                                                </div>
+
                                         ))
                                     }
                                 </TableCell>
