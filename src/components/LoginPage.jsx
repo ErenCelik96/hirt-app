@@ -74,10 +74,10 @@ export default function SignInSide() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              HIRT APP
+              EREN'S APP
             </Typography>
             <br/>
-            <Typography sx={{textAlign: 'center', fontSize: '12px'}}>Bu uygulama, buluşmakta zorluk çeken tüm hırtlara hitaben oluşturulmuştur.</Typography>
+            <Typography sx={{textAlign: 'center', fontSize: '12px'}}>Bu uygulama, buluşmakta zorluk çeken arkadaş gruplarına hitaben oluşturulmuştur.</Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <Button
                 type="submit"

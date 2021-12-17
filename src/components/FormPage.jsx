@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from '@mui/material/Button';
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@mui/material";
-import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import { TextField } from "@material-ui/core";
 import { auth, db } from "../firebase";
 
@@ -21,23 +19,17 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     height: "100vh",
-    width: "100%", // Fix IE 11 issue.
+    width: "100%", 
     marginTop: theme.spacing(3),
   }
 }));
 
 const FormPage = () => {
-  const [goOut, setGoOut] = useState(false);
-  const [where, setWhere] = useState('');
+  const [where, setWhere] = useState(''); 
   const [date, setDate] = useState('');
-  const [isCome, setIsCome] = useState('');
   const [user, setUser] = useState('');
   const [message, setMessage] = useState('');
-
-  const handleChangeGoOut=(e)=>{
-    setGoOut(e.target.value);
-    goOut ? setIsCome("Çıkmıyor, götünü siktirmekle meşgul") : setIsCome("Çıkıyor") 
-  }
+  // let [id, setId] = useState(0);
 
   const handleChangeWhere = (e) => {
     setWhere(e.target.value);
@@ -46,16 +38,16 @@ const FormPage = () => {
   const handleChangeDate = (e) => {
     setDate(e.target.value);
   }
-
+  
   const add = () => {
     const addRef = db.ref("durum");
     addRef.push({
       isim:user.displayName,
-      durum:isCome,
       nereye:where,
-      tarih:date
+      tarih:date,
     });
-    goOut ? setMessage("Durumun paylaşıldı. Göt siktirmeye devam edebilirsin.") :setMessage("Durumun paylaşıldı. Geç kalma sikerim belanı")
+    setMessage("Durumun paylaşıldı.")
+    // setId(id+1);
   }
 
   useEffect(() => {
@@ -67,51 +59,18 @@ const FormPage = () => {
       }
     })
   }, [])
-
-  useEffect(()=>{
-    if(goOut){
-      setIsCome("Çıkmıyor, götünü siktirmekle meşgul")
-      setWhere('')
-      setDate('')
-    }else {
-      setIsCome("Çıkıyor")
-    } 
-  }, [goOut])
-  
+  console.log(user)
   const classes = useStyles();
 
   return (
     <div className={classes.div}>
       <br/>
-      <Typography variant="h5" sx={{color:"blue"}}>Form Sayfası</Typography>
+      <Typography variant="h5" sx={{color:"blue"}}>Etkinlik Paylaş</Typography>
       <div className={classes.form}>
         <FormControl sx={{ m: 1, maxWidth: 350 }}>
-          <Typography>Dışarı Çıkıyor Musun?</Typography>
-          <Select
-            labelId="demo-simple-select-autowidth-label"
-            id="demo-simple-select-autowidth"
-            value={goOut}
-            onChange={handleChangeGoOut}
-            autoWidth
-          >
-            <MenuItem
-              value={false}
-            >
-              Evet
-            </MenuItem>
-            <MenuItem
-              value={true}
-            >
-              Hayır
-            </MenuItem>
-          </Select>
-          {
-            goOut ? <Typography sx={{ color: "red" }}>Gelmezsen gelme yarrağım</Typography> : null
-          }
           <br /><br />
-          <Typography>Nereye Gidelim?</Typography>
+          <Typography>Nereye Gitmek İstiyorsun?</Typography>
           <TextField
-            disabled={goOut}
             id="outlined-basic"
             variant="outlined"
             placeholder="Örn:Piazza MOC, Pendik marina.."
@@ -126,14 +85,13 @@ const FormPage = () => {
             sx={{ width: 250 }}
             variant="outlined"
             value={date}
-            disabled={goOut}
             onChange={handleChangeDate}
             InputLabelProps={{
               shrink: true,
             }}
           />
           <br /><br />
-          <Button onClick={add} sx={{ color: "blue", outline: "solid" }}>Hırtlarla Paylaş</Button>
+          <Button onClick={add} sx={{ color: "blue", outline: "solid" }}>Arkadaşlarınla Paylaş</Button>
           <br/>
           <Typography sx={{ color: "red" }}>{message}</Typography>
         </FormControl>

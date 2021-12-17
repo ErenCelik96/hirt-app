@@ -35,7 +35,7 @@ export default function MenuAppBar({user}) {
           >
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Ooo {user.displayName} kekem hoşgeldin..
+            Merhaba {user.displayName || "Misafir"}, hoşgeldin !
           </Typography>
             <div>
               <IconButton
@@ -64,14 +64,13 @@ export default function MenuAppBar({user}) {
                 onClose={handleClose}
               >
                 <Link to="/dashboard"> <MenuItem onClick={handleClose}>Anasayfa</MenuItem></Link>
-                <Link to="/"><MenuItem onClick={handleClose}>Durum Paylaş</MenuItem></Link>
-                <MenuItem onClick={()=>auth.signOut()}>Çıkış yap (siktir git)</MenuItem>
+                <Link to="/"><MenuItem onClick={handleClose}>Etkinlik Paylaş</MenuItem></Link>
+                <MenuItem onClick={()=>auth.signOut()}>Çıkış yap</MenuItem>
               </Menu>
             </div>
         </Toolbar>
       </AppBar>
     </Box>
-    {/* <FormPage /> */}
     </>
   );
 }
