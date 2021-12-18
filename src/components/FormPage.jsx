@@ -32,7 +32,7 @@ const FormPage = () => {
   // const [status, setStatus] = useState(true);
 
   const handleChangeWhere = (e) => {
-    setWhere(e.target.value.toLocaleLowerCase());
+    setWhere(e.target.value.toLocaleLowerCase().replace(" ", ""));
   }
 
   const handleChangeDate = (e) => {

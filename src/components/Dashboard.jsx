@@ -16,13 +16,12 @@ import "firebase/database";
 const Dashboard = ({ user }) => {
     const [currentBlogs, setCurrentBlogs] = useState();
     const [gelenlerTable, setGelenlerTable] = useState();
-    const [come, setCome] = useState();
     const [key, setKey] = useState("");
     const today = new Date();
 
     //gelen etkinlik verilerini state e aktar fonk.
     useEffect(() => {
-        setCome(true);
+
         const addRef = db.ref("durum");
         addRef.on("value", (snapshot) => {
             const durum = snapshot.val();
@@ -51,33 +50,29 @@ const Dashboard = ({ user }) => {
 
     //etkinlik veri silme fonk.
     const remove = (id) => {
-        firebaseConfig.database().ref(`durum/${id}/status`).set("false").then(() => console.log("Etkinlik silindi."))
+        firebaseConfig.database().ref(`durum/${id}`).remove().then(() => console.log("Etkinlik silindi."))
     }
 
     //gelenleri database e kaydetme fonk
     const addGelen = () => {
-        if (come) {
             const addRef = db.ref("gelenler");
             addRef.push({
                 name: user.displayName,
                 where: key,
                 status: true,
             });
-        };
-        setCome(false);
         setKey("");
     }
 
     //gelenler silme fonk
     const removeGelen = (id) => {
-        // firebaseConfig.database().ref(`gelenler/${id}`).remove().then(() => console.log("Etkinlik silindi."))
-        firebaseConfig.database().ref(`gelenler/${id}/status`).set("false").then(() => console.log("Gelen silindi."))
-        setCome(true);
+        firebaseConfig.database().ref(`gelenler/${id}`).remove().then(() => console.log("Gelen silindi."))
+        // firebaseConfig.database().ref(`gelenler/${id}/status`).set("false").then(() => console.log("Gelen sa silindi."))
     }
 
     //gitmek istenilen yerin yazıldığı fonk
     const handleKey = (e) => {
-        setKey(e.target.value.toLocaleLowerCase());
+        setKey(e.target.value.toLocaleLowerCase().replace(" ", ""));
     }
 
     return (
@@ -120,7 +115,7 @@ const Dashboard = ({ user }) => {
                                         {
                                             gelenlerTable ?
                                                 gelenlerTable.map((gelen, i) => (
-                                                    gelen.where !== blog.where || gelen.where === "" || moment(blog.date, "YYYYMMDD").fromNow().includes("ago") || gelen.status !== true ?
+                                                    gelen.where !== blog.where || moment(blog.date, "YYYYMMDD").fromNow().includes("ago") ?
                                                         null
                                                         :
                                                         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
