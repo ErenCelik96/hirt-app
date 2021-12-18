@@ -115,7 +115,7 @@ const Dashboard = ({ user }) => {
                                 <TableCell >{blog?.nereye || <b>bilgi girilmemiş</b>}</TableCell>
                                 <TableCell sx={{ textDecoration: moment(blog.tarih, "YYYYMMDD").fromNow().includes("ago") ? "line-through" : "none" }}>{moment(blog?.tarih).format('LLL') === "Invalid date" ? moment(today).format('LLL') : moment(blog?.tarih).format('LLL')}</TableCell>
                                 <TableCell sx={{minWidth:'120px'}}>
-                                    {
+                                    {gelenlerTable ? 
                                         gelenlerTable.map((gelen, i) => (
                                             gelen.where !== blog.nereye || gelen.where === "" || moment(blog.tarih, "YYYYMMDD").fromNow().includes("ago") || user.displayName === blog.isim ?
                                                 null
@@ -128,9 +128,11 @@ const Dashboard = ({ user }) => {
                                                     </p>
                                                     <Button disabled={user.displayName === gelen.isim ? false : true} onClick={() => removeGelen(gelen.id)}><DeleteOutlinedIcon sx={{ color: user.displayName !== gelen.isim ? 'grey' : 'red' }} />
                                                     </Button>
-                                                </div>
+                                                </div> 
 
                                         ))
+                                        : 
+                                        null
                                     }
                                 </TableCell>
                                 <Button disabled={user.displayName === blog.isim ? false : true} sx={{ color: "red" }} onClick={() => remove(blog.id)}>Sil</Button>
