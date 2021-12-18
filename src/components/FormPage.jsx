@@ -29,7 +29,7 @@ const FormPage = () => {
   const [date, setDate] = useState('');
   const [user, setUser] = useState('');
   const [message, setMessage] = useState('');
-  // let [id, setId] = useState(0);
+  // const [status, setStatus] = useState(true);
 
   const handleChangeWhere = (e) => {
     setWhere(e.target.value.toLocaleLowerCase());
@@ -42,9 +42,10 @@ const FormPage = () => {
   const add = () => {
     const addRef = db.ref("durum");
     addRef.push({
-      isim:user.displayName,
-      nereye:where,
-      tarih:date
+      name:user.displayName,
+      where:where,
+      date:date,
+      status:true
     });
     setMessage("Durumun paylaşıldı.")
   }

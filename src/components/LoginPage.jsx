@@ -16,7 +16,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="">
-        Hırt App
+        Meet App
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -74,7 +74,7 @@ export default function SignInSide() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              EREN'S APP
+              MEET APP
             </Typography>
             <br/>
             <Typography sx={{textAlign: 'center', fontSize: '12px'}}>Bu uygulama, buluşmakta zorluk çeken arkadaş gruplarına hitaben oluşturulmuştur.</Typography>
